@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import DeckDetail from './DeckDetail';
+import { View } from 'react-native';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import Root from './components/Root';
+import reducer from './reducers';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 
 export default class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <DeckDetail />
-      </View>
+      <Provider store={store}>
+        <View style={{ flex: 1 }}>
+          <Root />
+        </View>
+      </Provider>
     );
   }
 }
