@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Keyboard } from 'react-native';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { addDeckTAC } from '../actions/deckActions';
 import Button from './Button';
 import Text from './Text';
 import TextInput from './TextInput';
@@ -13,23 +15,36 @@ const NewDeckView = styled.View`
 `;
 
 class NewDeck extends Component {
-  static navigationOptions = {
-    title: 'New Deck',
+  state = {
+    deckTitle: '',
   };
+
+  handleOnChangeText = deckTitle => {
+    this.setState({ deckTitle });
+  }
+
+  onSubmit = () => {
+    const { dispatch } = this.props;
+    dispatch(addDeckTAC(this.state.deckTitle)).then(() => {
+      Keyboard.dismiss();
+      this.setState({ deckTitle: '' });
+      Alert.alert("New Deck has been created!");
+    });
+  }
 
   render() {
     return (
       <NewDeckView>
         <Text big>What is the title of your new deck?</Text>
         <TextInput
-          underlineColorAndroid="transparent"
-          placeholder="Deck Title"
           maxLength={30}
+          onChangeText={this.handleOnChangeText}
+          placeholder="Deck Title"
+          underlineColorAndroid="transparent"
+          value={this.state.deckTitle}
         />
         <Button
-          onPress={() => {
-            Alert.alert('You tapped Submit button!');
-          }}
+          onPress={this.onSubmit}
           title="Submit"
         />
       </NewDeckView>
@@ -37,4 +52,4 @@ class NewDeck extends Component {
   }
 }
 
-export default NewDeck;
+export default connect()(NewDeck);
