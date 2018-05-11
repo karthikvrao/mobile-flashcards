@@ -3,6 +3,7 @@ import {
   RECEIVE_DECKS,
   RECEIVE_DECK,
   ADD_DECK,
+  ADD_CARD,
   SET_SELECTED_DECK,
 } from '../actions/actionTypes';
 
@@ -12,6 +13,7 @@ const decks = (state = {}, action) => {
     decks: allDecks,
     deck,
     title,
+    card,
   } = action;
 
   switch (action.type) {
@@ -21,6 +23,14 @@ const decks = (state = {}, action) => {
       return { ...state, [deck.title]: deck };
     case ADD_DECK:
       return { ...state, [title]: { title, questions: [] } };
+    case ADD_CARD:
+      return {
+        ...state,
+        [title]: {
+          ...state[title],
+          questions: [...state[title].questions, card],
+        },
+      };
     default:
       return state;
   }
