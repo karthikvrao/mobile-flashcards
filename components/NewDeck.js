@@ -17,33 +17,57 @@ const NewDeckView = styled.View`
 class NewDeck extends Component {
   state = {
     deckTitle: '',
+    errors: {
+      blankDeckTitle: false,
+    }
   };
 
-  handleOnChangeText = deckTitle => {
-    this.setState({ deckTitle });
+  handleOnChangeTitle = deckTitle => {
+    this.setState(prevState => {
+      const newState = { ...prevState };
+      newState.deckTitle = deckTitle;
+      newState.errors.blankDeckTitle = deckTitle === '' ? true : false;
+      return newState;
+    });
   }
 
   onSubmit = () => {
     const { dispatch } = this.props;
-    dispatch(addDeckTAC(this.state.deckTitle)).then(() => {
-      Keyboard.dismiss();
-      this.setState({ deckTitle: '' });
-      Alert.alert("New Deck has been created!");
-    });
+    const { deckTitle } = this.state;
+
+    const deckTitleTrimmed = deckTitle.trim();
+    if (deckTitleTrimmed) {
+      // Save new deck and show confirmation dialog to user
+      dispatch(addDeckTAC(deckTitleTrimmed)).then(() => {
+        Keyboard.dismiss();
+        this.setState({ deckTitle: '' });
+        Alert.alert("New Deck has been created!");
+      });
+    } else {
+      this.setState(prevState => {
+        const newState = { ...prevState };
+        newState.errors.blankDeckTitle = true;
+        return newState;
+      });
+    }
   }
 
   render() {
+    const { deckTitle, errors } = this.state;
+
     return (
       <NewDeckView>
         <Text big>What is the title of your new deck?</Text>
         <TextInput
           maxLength={30}
-          onChangeText={this.handleOnChangeText}
+          onChangeText={this.handleOnChangeTitle}
           placeholder="Deck Title"
           underlineColorAndroid="transparent"
-          value={this.state.deckTitle}
+          value={deckTitle}
         />
+        {errors.blankDeckTitle && <Text tertiary>Deck title cannot be empty</Text>}
         <Button
+          disabled={errors.blankDeckTitle}
           onPress={this.onSubmit}
           title="Submit"
         />
