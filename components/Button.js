@@ -8,6 +8,8 @@ const ButtonView = styled.View`
   background-color: black;
   border-radius: 5;
   margin: 5px;
+  opacity: ${props => (props.disabled ? 0.7 : 1)};
+  width: 200;
   ${(props) => {
     if (props.type === 'outline') {
       return css`
@@ -28,7 +30,7 @@ const ButtonView = styled.View`
 `;
 
 const ButtonText = styled.Text`
-  margin: 20px 60px;
+  margin: 20px;
   color: white;
   font-size: 16;
   ${props => props.type === 'outline' && css`
@@ -36,11 +38,11 @@ const ButtonText = styled.Text`
   `}
 `;
 
-const Button = ({ onPress, title, type }) => {
+const Button = ({ disabled, onPress, title, type }) => {
   if (Platform.OS === 'ios') {
     return (
-      <TouchableOpacity onPress={onPress}>
-        <ButtonView type={type}>
+      <TouchableOpacity disabled={disabled} onPress={onPress}>
+        <ButtonView disabled={disabled} type={type}>
           <ButtonText type={type}>{title}</ButtonText>
         </ButtonView>
       </TouchableOpacity>
@@ -49,10 +51,11 @@ const Button = ({ onPress, title, type }) => {
 
   return (
     <TouchableNativeFeedback
+      disabled={disabled}
       onPress={onPress}
       background={TouchableNativeFeedback.Ripple('grey', false)}
     >
-      <ButtonView type={type}>
+      <ButtonView disabled={disabled} type={type}>
         <ButtonText type={type}>{title}</ButtonText>
       </ButtonView>
     </TouchableNativeFeedback>
