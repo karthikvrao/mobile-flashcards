@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Alert } from 'react-native';
 import Button from './Button';
 import Text from './Text';
 
@@ -21,28 +21,40 @@ const DeckResponseView = styled.View`
   align-items: center;
 `;
 
-const DeckDetail = () => (
-  <DeckDetailView>
-    <DeckInfoView>
-      <Text big>udacicards</Text>
-      <Text secondary big>{3} cards</Text>
-    </DeckInfoView>
-    <DeckResponseView>
-      <Button
-        onPress={() => {
-          Alert.alert('You tapped Add button!');
-        }}
-        type="outline"
-        title="Add Card"
-      />
-      <Button
-        onPress={() => {
-          Alert.alert('You tapped Start button!');
-        }}
-        title="Start Quiz"
-      />
-    </DeckResponseView>
-  </DeckDetailView>
-);
+class DeckDetail extends Component {
+  static navigationOptions = ({ navigation }) => (
+    {
+      title: navigation.getParam('title', 'Deck Detail'),
+    }
+  );
 
-export default DeckDetail;
+  render() {
+    const { deck, navigation } = this.props;
+    const disableQuiz = deck.questions.length === 0;
+
+    return (
+      <DeckDetailView>
+        <DeckInfoView>
+          <Text big>{deck.title}</Text>
+          <Text secondary big>{deck.questions.length} cards</Text>
+        </DeckInfoView>
+        <DeckResponseView>
+          <Button
+            onPress={() => navigation.navigate('AddCard')}
+            type="outline"
+            title="Add Card"
+          />
+          <Button
+            disabled={disableQuiz}
+            onPress={() => navigation.navigate('Quiz')}
+            title="Start Quiz"
+          />
+        </DeckResponseView>
+      </DeckDetailView>
+    );
+  }
+}
+
+const mapStateToProps = ({ decks, selectedDeck }) => ({ deck: decks[selectedDeck] });
+
+export default connect(mapStateToProps)(DeckDetail);
