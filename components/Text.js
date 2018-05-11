@@ -1,9 +1,8 @@
-import React from 'react';
 import styled, { css } from 'styled-components';
 
 const Text = styled.Text`
   color: black;
-  font-size: ${props => (props.big ? 32 : 24)};
+  font-size: ${props => (props.big ? 36 : 24)};
   text-align: center;
   ${props => props.secondary && css`
     color: gray;
@@ -11,7 +10,9 @@ const Text = styled.Text`
   `}
   ${props => props.tertiary && css`
     color: red;
-    font-size: 16;
+    font-size: ${props.big ? 16 : 12};
+    font-weight: bold;
+    padding: 10px;
   `}
 `;
 
