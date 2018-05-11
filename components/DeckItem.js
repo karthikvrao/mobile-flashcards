@@ -20,18 +20,11 @@ const CardsCountText = styled.Text`
   font-size: 16;
 `;
 
-const DeckItemContent = ({ deck }) => (
-  <DeckItemView>
-    <DeckTitleText>{deck.title}</DeckTitleText>
-    <CardsCountText>{deck.cardsCount} cards</CardsCountText>
-  </DeckItemView>
-);
-
 class DeckItem extends Component {
   handlePress = () => {
     const { deck, dispatch, navigation } = this.props;
-    dispatch(setSelectedDeck(deck.title))
-      .then(() => navigation.navigate('DeckDetail'));
+    dispatch(setSelectedDeck(deck.title));
+    navigation.navigate('DeckDetail', { title: deck.title });
   }
 
   render() {
