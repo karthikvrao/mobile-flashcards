@@ -36,7 +36,7 @@ const decks = (state = {}, action) => {
   }
 };
 
-const selectedDeck = (state = {}, action) => {
+const selectedDeck = (state = '', action) => {
   const { title } = action;
   switch (action.type) {
     case SET_SELECTED_DECK:
