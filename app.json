@@ -8,10 +8,10 @@
     "version": "1.0",
     "primaryColor": "#000000",
     "ios": {
-      "bundleIdentifier": "org.mobile-flashcards.exp"
+      "bundleIdentifier": "com.udacity.mobileflashcards"
     },
     "android": {
-      "package": "org.mobile-flashcards.exp"
+      "package": "com.udacity.mobileflashcards"
     }
   }
 }
