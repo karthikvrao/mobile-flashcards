@@ -3,6 +3,7 @@ import { Alert, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { addDeckTAC } from '../actions/deckActions';
+import setSelectedDeck from '../actions/selectedDeckActions';
 import Button from './Button';
 import Text from './Text';
 import TextInput from './TextInput';
@@ -32,16 +33,17 @@ class NewDeck extends Component {
   }
 
   onSubmit = () => {
-    const { dispatch } = this.props;
+    const { dispatch, navigation } = this.props;
     const { deckTitle } = this.state;
 
     const deckTitleTrimmed = deckTitle.trim();
     if (deckTitleTrimmed) {
-      // Save new deck and show confirmation dialog to user
+      // Save new deck and navigate user to new Deck's Detail screen
       dispatch(addDeckTAC(deckTitleTrimmed)).then(() => {
         Keyboard.dismiss();
         this.setState({ deckTitle: '' });
-        Alert.alert("New Deck has been created!");
+        dispatch(setSelectedDeck(deckTitleTrimmed));
+        navigation.navigate('DeckDetail', { title: deckTitleTrimmed });
       });
     } else {
       this.setState(prevState => {
