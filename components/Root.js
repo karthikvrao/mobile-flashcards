@@ -18,6 +18,10 @@ const Root = StackNavigator(
     },
     Quiz: {
       screen: Quiz,
+      navigationOptions: {
+        title: 'Quiz',
+      },
+
     },
     AddCard: {
       screen: AddCard,
