@@ -1,5 +1,17 @@
 {
   "expo": {
-    "sdkVersion": "26.0.0"
+    "sdkVersion": "26.0.0",
+    "orientation": "portrait",
+    "name": "Mobile Flashcards",
+    "description": "The best way to revise",
+    "slug": "mobile-flashcards",
+    "version": "1.0",
+    "primaryColor": "#000000",
+    "ios": {
+      "bundleIdentifier": "org.mobile-flashcards.exp"
+    },
+    "android": {
+      "package": "org.mobile-flashcards.exp"
+    }
   }
 }

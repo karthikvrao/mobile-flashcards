@@ -21,7 +21,6 @@ const Root = StackNavigator(
       navigationOptions: {
         title: 'Quiz',
       },
-
     },
     AddCard: {
       screen: AddCard,
