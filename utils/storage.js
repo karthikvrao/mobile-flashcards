@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
-const DECKS_STORAGE_KEY = 'MobileFlashcards:Decks';
+const DECKS_STORAGE_KEY = 'MobileFlashcards:decks';
+const NOTIFICATION_KEY = 'MobileFlashcards:notifications';
 
 const getDecks = () => (
   AsyncStorage.getItem(DECKS_STORAGE_KEY).then(JSON.parse)
@@ -33,4 +34,18 @@ const addCardToDeck = (title, card) =>
     return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
   });
 
-export { getDecks, getDeck, saveDeckTitle, addCardToDeck };
+const removeNotificationKey = () => AsyncStorage.removeItem(NOTIFICATION_KEY);
+
+const getNotificationKey = () => AsyncStorage.getItem(NOTIFICATION_KEY).then(JSON.parse);
+
+const setNotificationKey = value => AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(value));
+
+export {
+  getDecks,
+  getDeck,
+  saveDeckTitle,
+  addCardToDeck,
+  removeNotificationKey,
+  getNotificationKey,
+  setNotificationKey,
+};

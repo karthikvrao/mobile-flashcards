@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, Animated, ActivityIndicator, View } from 'react-native';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { clearLocalNotifications, setLocalNotifications } from '../utils/helpers';
 import Text from './Text';
 import Question from './Question';
 import Answer from './Answer';
@@ -41,6 +42,10 @@ class Quiz extends Component {
     loading: false,
     rotate: new Animated.Value(0),
   };
+
+  componentDidMount() {
+    clearLocalNotifications().then(setLocalNotifications);
+  }
 
   flipQuizCard = () => {
     const { displayAnswer, rotate } = this.state;
