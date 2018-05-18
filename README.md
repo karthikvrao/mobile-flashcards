@@ -1,6 +1,6 @@
 ## Mobile Flashcards
 
-This is the source code for a cross-platform mobile flashcards app.
+This is the source code for a cross-platform mobile flashcards app. Although this app has been implemented to work on both Android and iOS, it has been tested on Android only.
 
 To work on or run the app on your phone / emulator, follow below steps:
 * In a terminal window 'cd' into this dir
